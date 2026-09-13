@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: helpdesk-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: helpdeskdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: HelpDesk.Api/Dockerfile
+    container_name: helpdesk-api
+    depends_on:
+      - db
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: Host=db;Port=5432;Database=helpdeskdb;Username=postgres;Password=postgres
+      Jwt__Key: HelpDeskSecretKeySuperSegura1234567890
+      Jwt__Issuer: HelpDeskApi
+      Jwt__Audience: HelpDeskApi
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres_data:
