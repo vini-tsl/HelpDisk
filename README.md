@@ -61,8 +61,8 @@ dotnet run
 
 2. Acesse:
 
-- Swagger: https://localhost:5001/swagger
-- API: https://localhost:5001/api
+- Swagger: http://localhost:5003/swagger
+- API: http://localhost:5003/api
 
 ### Opção 2: PostgreSQL
 
@@ -93,4 +93,4 @@ npm install
 npm run dev -- --host 127.0.0.1 --port 5175
 ```
 
-Abra `http://localhost:5175`. Para o proxy funcionar, mantenha a API rodando em `http://localhost:5001` quando a porta 5000 estiver ocupada.
+Abra `http://localhost:5175`. O proxy do Vite encaminha as requisições para a API em `http://localhost:5003`.
